@@ -1,6 +1,6 @@
 class CreateNodeClassProperties < ActiveRecord::Migration
   def change
-    create_table :node_class_properties do |t|
+    create_table :noodle_node_class_properties do |t|
       t.string :name, :null => false
       t.text :properties
       t.references :node_class, index: true, foreign_key: true, null: false

@@ -1,6 +1,6 @@
 class CreateNodeClasses < ActiveRecord::Migration
   def change
-    create_table :node_classes do |t|
+    create_table :noodle_node_classes do |t|
       t.string :name, :null => false, :unique => true
       t.text :description
 
