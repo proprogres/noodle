@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "noodle"
   s.version     = Noodle::VERSION
   s.authors     = ["LA"]
-  s.email       = ["leszek.albrzykowski@nobleprog.pl"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Noodle."
-  s.description = "TODO: Description of Noodle."
+  s.email       = ["kontakt@proprogres.org.pl"]
+  s.homepage    = "https://github.com/proprogres/noodle"
+  s.summary     = "Basic custom field based content managment storage"
+  s.description = ""
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
