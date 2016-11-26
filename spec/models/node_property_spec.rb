@@ -219,4 +219,44 @@ RSpec.describe Noodle::NodeProperty, :type => :model do
       expect(@node_property.value).to eq(timestamp)
     end
   end
+  context "properly validates value before save" do
+    before(:each) do
+      @node_class = Noodle::NodeClass.new(name: 'node_class')
+      @node = Noodle::Node.new(node_class: @node_class)
+      @node_class_property = Noodle::NodeClassProperty.new(
+        name: 'node_class_property',
+        node_class: @node_class
+      )
+      @node_property = Noodle::NodeProperty.new(node: @node)
+      @node_property.node_class_property = @node_class_property
+    end
+    it "empty validator raise error for empty value" do
+      @node_class_property.properties = {type: 'string', validators: {empty: false}}
+      @node_property.value = ''
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 'str'
+      expect{@node_property.save}.not_to raise_error
+    end
+    it "empty validator raise error for blank value" do
+      @node_class_property.properties = {type: 'string', validators: {blank: false}}
+      @node_property.value = ' '
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 'str'
+      expect{@node_property.save}.not_to raise_error
+    end
+    it "empty validator raise error for if string value is to short" do
+      @node_class_property.properties = {type: 'string', validators: {length: [5, 10]}}
+      @node_property.value = 'str'
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 'strstr'
+      expect{@node_property.save}.not_to raise_error
+    end
+    it "empty validator raise error for if string value is to long" do
+      @node_class_property.properties = {type: 'string', validators: {length: [0, 1]}}
+      @node_property.value = 'str'
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 's'
+      expect{@node_property.save}.not_to raise_error
+    end
+  end
 end
