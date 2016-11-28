@@ -230,32 +230,46 @@ RSpec.describe Noodle::NodeProperty, :type => :model do
       @node_property = Noodle::NodeProperty.new(node: @node)
       @node_property.node_class_property = @node_class_property
     end
-    it "empty validator raise error for empty value" do
+    it "empty validator raise error if value is empty" do
       @node_class_property.properties = {type: 'string', validators: {empty: false}}
       @node_property.value = ''
       expect{@node_property.save}.to raise_error
       @node_property.value = 'str'
       expect{@node_property.save}.not_to raise_error
     end
-    it "empty validator raise error for blank value" do
+    it "blank validator raise error if value is blank" do
       @node_class_property.properties = {type: 'string', validators: {blank: false}}
       @node_property.value = ' '
       expect{@node_property.save}.to raise_error
       @node_property.value = 'str'
       expect{@node_property.save}.not_to raise_error
     end
-    it "empty validator raise error for if string value is to short" do
-      @node_class_property.properties = {type: 'string', validators: {length: [5, 10]}}
+    it "min length validator raise error if string value is to short" do
+      @node_class_property.properties = {type: 'string', validators: {min_length: 5}}
       @node_property.value = 'str'
       expect{@node_property.save}.to raise_error
       @node_property.value = 'strstr'
       expect{@node_property.save}.not_to raise_error
     end
-    it "empty validator raise error for if string value is to long" do
-      @node_class_property.properties = {type: 'string', validators: {length: [0, 1]}}
+    it "max length validator raise error if string value is to long" do
+      @node_class_property.properties = {type: 'string', validators: {max_length: 1}}
       @node_property.value = 'str'
       expect{@node_property.save}.to raise_error
       @node_property.value = 's'
+      expect{@node_property.save}.not_to raise_error
+    end
+    it "min length validator raise error if value is lesser than *" do
+      @node_class_property.properties = {type: 'string', validators: {min: 10}}
+      @node_property.value = 9
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 11
+      expect{@node_property.save}.not_to raise_error
+    end
+    it "max length validator raise error if value is greater than *" do
+      @node_class_property.properties = {type: 'string', validators: {max: 10}}
+      @node_property.value = 11
+      expect{@node_property.save}.to raise_error
+      @node_property.value = 9
       expect{@node_property.save}.not_to raise_error
     end
   end
