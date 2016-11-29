@@ -8,10 +8,12 @@ RSpec.describe Noodle::NodeProperty, :type => :model do
       @node = Noodle::Node.new(node_class: @node_class)
       @node_class_property = Noodle::NodeClassProperty.new(
         name: 'node_class_property',
-        node_class: @node_class
+        node_class: @node_class,
+        properties: {}
       )
       @node_property = Noodle::NodeProperty.new(node: @node)
       @node_property.node_class_property = @node_class_property
+      @node.node_properties << @node_property
     end
     it "empty validator raise error if value is empty" do
       @node_class_property.properties = {type: 'string', validators: {empty: false}}

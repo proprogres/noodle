@@ -8,10 +8,12 @@ RSpec.describe Noodle::NodeProperty, :type => :model do
       @node = Noodle::Node.new(node_class: @node_class)
       @node_class_property = Noodle::NodeClassProperty.new(
         name: 'node_class_property',
-        node_class: @node_class
+        node_class: @node_class,
+        properties: {}
       )
       @node_property = Noodle::NodeProperty.new(node: @node)
       @node_property.node_class_property = @node_class_property
+      @node.node_properties << @node_property
     end
     it "assigns binary value" do
       @node_class_property.properties = {type: 'binary'}
@@ -121,6 +123,7 @@ RSpec.describe Noodle::NodeProperty, :type => :model do
       )
       @node_property = Noodle::NodeProperty.new(node: @node)
       @node_property.node_class_property = @node_class_property
+      @node.node_properties << @node_property
     end
     it "assigns binary value" do
       @node_class_property.properties = {type: 'binary'}
