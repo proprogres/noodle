@@ -20,45 +20,11 @@ module Noodle
                    Noodle::MaxValidator
 
     def value=(value)
-      self["#{node_class_property.properties['type']}_value"] = cast value
+      self["#{node_class_property.properties['type']}_value"] = value
     end
 
     def value
       self["#{node_class_property.properties['type']}_value"]
-    end
-
-    private
-
-    def cast(value)
-      case node_class_property.properties['type']
-      when 'binary'
-        value.b
-      when 'boolean'
-        !!value
-      when 'date'
-        value.to_date
-      when 'datetime'
-        value.to_datetime
-      when 'decimal'
-        value.to_f
-      when 'float'
-        value.to_f
-      when 'integer'
-        value.to_i
-      when 'bigint'
-        value.to_i
-      when 'string'
-        value.to_s
-      when 'text'
-        value.to_s
-      when 'time'
-        value.to_time
-      when 'timestamp'
-        # @todo try to find fix with nil in tests
-        value
-      else
-        raise 'Unrecognized value type'
-      end
     end
   end
 end
