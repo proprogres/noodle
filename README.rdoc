@@ -1,3 +1,7 @@
-= Noodle
+# Noodle - Simple RESTful data bucket
 
-This project rocks and uses MIT-LICENSE.
+# What Noodle is?
+Noodle is application writen in Ruby (Rails) that allows you to CRUD structured data via REST API.
+
+### Authors
+![ProProgres Logo](http://www.proprogres.org.pl/img/logo.png "ProProgres Logo")
