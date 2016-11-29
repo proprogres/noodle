@@ -11,9 +11,13 @@ RSpec.describe Noodle::Node, :type => :model do
       
       node_class_property = Noodle::NodeClassProperty.new(
         name: 'node_class_property',
-        node_class: node_class
+        node_class: node_class,
+        properties: {}
       )
-      node_property = Noodle::NodeProperty.new({node: node, node_class_property: node_class_property})
+      node_property = Noodle::NodeProperty.new({
+        node: node,
+        node_class_property: node_class_property
+      })
       node.node_properties << node_property
       
       expect{node.save}.not_to raise_error

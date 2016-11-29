@@ -20,7 +20,6 @@ module Noodle
           key = property.name.to_sym
           if hash.key?(key)
             node_property = NodeProperty.new(node: self, node_class_property: property, value: hash[key])
-            # node_property.value = hash[key]
             self.node_properties << node_property
           end
         end
