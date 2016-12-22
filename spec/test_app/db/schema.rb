@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124002404) do
+ActiveRecord::Schema.define(version: 20161222221720) do
 
   create_table "noodle_node_class_properties", force: :cascade do |t|
     t.string   "name",          null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20161124002404) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "service"
   end
 
   create_table "noodle_node_properties", force: :cascade do |t|
