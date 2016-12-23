@@ -1,5 +1,7 @@
 require_dependency "noodle/application_controller"
-
+# @see https://blog.codeship.com/the-json-api-spec/
+# @see http://ieftimov.com/sprinkle-some-hateoas-on-rails-apis
+# @see http://stackoverflow.com/questions/30158710/how-to-write-a-spec-to-check-if-a-record-is-saved-in-the-database-using-rspec-wi
 module Noodle
   class NodesController < ApplicationController
     before_action :set_node, only: [:show, :edit, :update, :destroy]
@@ -24,13 +26,10 @@ module Noodle
 
     # POST /nodes
     def create
-      @node = Node.new(node_params)
-
-      if @node.save
-        redirect_to @node, notice: 'Node was successfully created.'
-      else
-        render :new
-      end
+      # @node = Factories::Node.create(node_params[:service], node_params[:class], node_params[:properties])
+      # if @node.save
+      # end
+      render :status => :created, json: {}.to_json
     end
 
     # PATCH/PUT /nodes/1
@@ -56,7 +55,8 @@ module Noodle
 
       # Only allow a trusted parameter "white list" through.
       def node_params
-        params[:node]
+        # @see http://stackoverflow.com/questions/15919761/rails-4-nested-attributes-unpermitted-parameters
+        params.permit(:service, :class, :properties => [])
       end
   end
 end
