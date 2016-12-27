@@ -26,9 +26,9 @@ module Noodle
 
     # POST /nodes
     def create
-      # @node = Factories::Node.create(node_params[:service], node_params[:class], node_params[:properties])
-      # if @node.save
-      # end
+      @node = Factories::Node.create(referral_params[:service], referral_params[:class], referral_params[:properties].to_json)
+      @node.save
+
       render :status => :created, json: {}.to_json
     end
 
@@ -56,7 +56,14 @@ module Noodle
       # Only allow a trusted parameter "white list" through.
       def node_params
         # @see http://stackoverflow.com/questions/15919761/rails-4-nested-attributes-unpermitted-parameters
-        params.permit(:service, :class, :properties => [])
+        params.require(:node).permit(:service, :class, :properties)
+      end
+      
+      def referral_params
+        json_params = ActionController::Parameters.new( JSON.parse(request.body.read) )
+        params.require(:node).tap do |whitelisted|
+          whitelisted[:properties] = params[:node][:properties]
+        end
       end
   end
 end
